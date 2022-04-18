@@ -2,6 +2,7 @@ import './Registration.css';
 import React, {useEffect, useState} from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios'
+import { Button, Card, Form } from 'react-bootstrap'
 
 const path = "http://localhost:3001/" // url for server
 
@@ -15,7 +16,10 @@ const Registration = () => {
     let navigate = useNavigate()
 
     const handleSubmit = () => {
-        if (!checkValidCredentials()) return
+        if (!checkValidCredentials()) {
+            alert("Please check if your credentials are correct")
+            return
+        }
 
         let req = path + "register"
         axios.post(req, {
@@ -36,31 +40,46 @@ const Registration = () => {
     }
 
 return (
-    <div className="App">
-        <div>
-            <h1> Registration </h1>
-
-            <label> Email </label>
-            <input type='text' onChange={(e) => setEmail(e.target.value)} /> <br/>
-
-            <label> First Name </label>
-            <input type='text' onChange= {(e) => setFirstName(e.target.value)}/> <br/>
-
-            <label> Last Name </label>
-            <input type='text' onChange={(e) => setLastName(e.target.value)}/> <br/>
-
-            <label> Password </label> 
-            <input type='password' onChange={(e) => setPassword(e.target.value)}/> <br/>
-            
-            <label> Confirm Password </label>
-            <input type='password' onChange={(e) => setConfirmPassword(e.target.value)}/> <br/>
-            
-            <button onClick = {handleSubmit}> Register </button> 
-
-            <br/> <br/>
-            <Link to = "../login">Login</Link>
-            </div>
-        </div>
+    <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+        <Card>
+            <Card.Header className = 'text-center' style = {{fontSize: 25}}>
+                Registration
+            </Card.Header>
+            <Card.Body style = {{padding: 50}}>
+                <Form>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Email address</Form.Label>
+                        <Form.Control type="email" placeholder="name@example.com"
+                        onChange={(e) => setEmail(e.target.value)} />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control type="text" placeholder="John"
+                        onChange= {(e) => setFirstName(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control type="text" placeholder="Smith"
+                        onChange={(e) => setLastName(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control type="password" 
+                        onChange={(e) => setPassword(e.target.value)}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Confirm Password</Form.Label>
+                        <Form.Control type="password" 
+                        onChange={(e) => setConfirmPassword(e.target.value)}/>
+                    </Form.Group>
+                    <div className = 'text-center'>
+                        <Button className = 'btn btn-primary btn-sx' onClick = {handleSubmit}> Register </Button> <br/><br/>
+                        <Link to = "../login">Already have an account? Login here</Link>
+                    </div>
+                </Form>
+            </Card.Body>
+        </Card>
+    </div>
     );
 }
 

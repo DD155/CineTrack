@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom"
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 import Registration from './Components/Authentication/Registration.js';
 import Login from './Components/Authentication/Login.js';
