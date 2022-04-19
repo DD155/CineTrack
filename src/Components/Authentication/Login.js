@@ -21,10 +21,9 @@ const Login = () => {
             if (res.data.message) alert(res.data.message)
             else {
                 let data = res.data[0]
-                console.log(res)
                 localStorage.setItem("name", data.first_name + " " + data.last_name)
                 localStorage.setItem("session", true)
-                navigate('/')
+                navigate('/home')
             }
         })
     }
@@ -48,8 +47,8 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}/>
                         </Form.Group>
                         <div className = 'text-center'>
-                            <Button className = 'btn btn-primary btn-sx' onClick = {handleLogin}> Register </Button> <br/><br/>
-                            <Link to = "../login">Already have an account? Login here</Link>
+                            <Button className = 'btn btn-primary btn-sx' onClick = {handleLogin}> Login </Button> <br/><br/>
+                            <Link to = "../registration">Already have an account? Login here</Link>
                         </div>
                     </Form>
                 </Card.Body>

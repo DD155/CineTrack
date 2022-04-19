@@ -28,9 +28,12 @@ const Registration = () => {
             last_name: lastName,
             password: password
         }).then((res) => {
-            console.log(res)
             if (res.data.message.length > 0) alert(res.data.message)
-            else navigate("/")
+            else {
+                localStorage.setItem("name", firstName + " " + lastName)
+                localStorage.setItem("session", true)
+                navigate("/home")
+            }
         })
     }
 

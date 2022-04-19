@@ -3,20 +3,27 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes} from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-
+import Navbar from './Components/Navbar/Navbar.js';
 import Registration from './Components/Authentication/Registration.js';
 import Login from './Components/Authentication/Login.js';
-import Landing from './Components/Landing/Landing.js';
+import Home from './Components/Home/Home.js';
+import Shows from './Components/Shows/Shows.js';
+import Movies from './Components/Movies/Movies.js';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Router>
-        <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="registration" element={<Registration />} />
-            <Route path="login" element = {<Login />} />
-        </Routes>
+        <div style={{/*backgroundColor: '#40434E', */height: '100vh'}}>
+            <Navbar/>
+            <Routes>
+                <Route path="home" element={<Home />} />
+                <Route path="registration" element={<Registration />} />
+                <Route path="login" element = {<Login />} />
+                <Route path="shows" element = {<Shows />} />
+                <Route path="movies" element = {<Movies />} />
+            </Routes>
+        </div>
     </Router>
 );
 

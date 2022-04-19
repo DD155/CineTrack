@@ -33,7 +33,7 @@ app.post("/register", (req, res) => {
         "INSERT INTO user (email, first_name, last_name, password) " + 
         "VALUES (?, ?, ?, ?)", [email, first_name, last_name, password], 
         (err, result) => {
-            if (err) res.send({message: "This email is already in use."})
+            if (result.length < 0) res.send({message: "This email is already in use."})
             else res.send(result)
         }
     )
