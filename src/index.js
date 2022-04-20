@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom"
+import { BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Navbar from './Components/Navbar/Navbar.js';
@@ -22,6 +22,7 @@ root.render(
                 <Route path="login" element = {<Login />} />
                 <Route path="shows" element = {<Shows />} />
                 <Route path="movies" element = {<Movies />} />
+                <Route path="/" element={<Navigate to="/home" replace />} />
             </Routes>
         </div>
     </Router>

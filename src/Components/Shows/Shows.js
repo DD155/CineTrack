@@ -1,11 +1,8 @@
 import './Shows.css';
-import React, {useEffect, useState, Button} from 'react';
-import { Link, useNavigate } from "react-router-dom";
-
+import React from 'react';
 
 const Shows = () => {
-    const isSignedIn = localStorage.getItem("session") ? true : false
-    const navigate = useNavigate()
+
 
     return (
     <div className="App">

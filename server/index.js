@@ -56,6 +56,19 @@ app.post("/login", (req, res) => {
     )
 })
 
+app.get("/getMovies", (req, res) => {
+    const errorMsg = "Could not read movies from database."
+    db.query(
+        "SELECT * FROM movie",
+        (err, result) => {
+            if (err) res.send({error: err})
+
+            // send the result if user was found, otherwise send an error message
+            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
+})
+
 
 PORT = 3001
 app.listen(PORT, () => {

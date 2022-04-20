@@ -1,10 +1,9 @@
 import './Registration.css';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios'
 import { Button, Card, Form } from 'react-bootstrap'
-
-const path = "http://localhost:3001/" // url for server
+import * as cons from '../../constants'
 
 const Registration = () => {
     const [email, setEmail] = useState('')
@@ -21,7 +20,7 @@ const Registration = () => {
             return
         }
 
-        let req = path + "register"
+        let req = cons.SERVER_PATH + "register"
         axios.post(req, {
             email: email,
             first_name: firstName, 

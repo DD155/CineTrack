@@ -1,16 +1,53 @@
 import './Movies.css';
-import React, {useEffect, useState, Button} from 'react';
-import { Link, useNavigate } from "react-router-dom";
-
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import * as cons from '../../constants';
+import { Card } from 'react-bootstrap'
 
 const Movies = () => {
-    const isSignedIn = localStorage.getItem("session") ? true : false
-    const navigate = useNavigate()
+    const [movies, setMovies] = useState([])
+
+    const setMovieData = () => 
+        axios.get(cons.SERVER_PATH + 'getMovies').then((res) => {
+        if (res.data) {
+            setMovies(res.data)
+        } else {console.log("error")}
+    })
+
+    const createCard = (title, year) => {
+        let path = cons.MOVIE_IMG_PATH + title + '.jpg' // image path 
+        return (
+            <Card style={{ width: '18rem' }}>
+                <Card.Img style={{height: '450px'}} variant="top" src= {path} />
+                <Card.Body>
+                    <Card.Title>{title + ' (' + year + ')'}</Card.Title>
+                </Card.Body>
+            </Card>
+        )
+    }
+
+    const displayMovies = () => {
+        let data = []
+        for (let i = 0; i < movies.length; i++) {
+            let current = movies[i]
+            let element = 
+            <div className = 'grid-item' key = {i}>
+                {createCard(current.title, current.year)}
+            </div>
+            data.push(element)
+        }
+        return (<div className = 'grid-container'>{data}</div>)
+    }
+
+    useEffect(() => {
+        setMovieData()
+    }, [])
 
     return (
     <div className="App">
         <div>
-            <h1> Movies! </h1>            
+            <h1> Movies! </h1>  
+            {displayMovies()}
         </div>
     </div>
     );

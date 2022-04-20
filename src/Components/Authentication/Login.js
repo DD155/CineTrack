@@ -1,11 +1,9 @@
 import './Login.css';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios'
 import { useNavigate, Link } from 'react-router-dom';
 import { Button, Card, Form } from 'react-bootstrap'
-
-
-const path = "http://localhost:3001/" // url for server
+import * as cons from '../../constants'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -13,7 +11,7 @@ const Login = () => {
     const navigate = useNavigate()
 
     const handleLogin = () => {
-        let req = path + "login"
+        let req = cons.SERVER_PATH + "login"
         axios.post(req, {
             email: email,
             password: password

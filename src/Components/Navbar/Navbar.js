@@ -2,8 +2,6 @@ import React from 'react'
 import './Navbar.css'
 import logo from "../../assets/logo.png"
 import { Link, useNavigate } from 'react-router-dom'
-import { Button } from 'react-bootstrap'
-
 
 const Navbar = () => {
     const isSignedIn = localStorage.getItem("session") 
