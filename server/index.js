@@ -56,18 +56,67 @@ app.post("/login", (req, res) => {
     )
 })
 
-app.get("/getMovies", (req, res) => {
+app.get("/getAllMovies", (req, res) => {
     const errorMsg = "Could not read movies from database."
     db.query(
         "SELECT * FROM movie",
         (err, result) => {
             if (err) res.send({error: err})
 
-            // send the result if user was found, otherwise send an error message
             result.length > 0 ? res.send(result) : res.send({message: errorMsg})
         }
     )
 })
+
+// select the movie that matches the id
+app.post("/getMovie", (req, res) => {
+    const movie_id = req.body.movie_id
+    const errorMsg = "Could not get movie from database."
+    db.query(
+        "SELECT * FROM movie WHERE movie_id = ?", [movie_id],
+        (err, result) => {
+            if (err) res.send({error: err})
+
+            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
+})
+
+// get the details of a movie OR show depending on the 'type' received from the frontend based on id
+app.post("/getDetails", (req, res) => {
+    const id = req.body.id
+    const type = req.body.type
+    const errorMsg = "Could not get details from database."
+    const query = type === 'movie' 
+        ? "SELECT * FROM movie WHERE movie_id = ?" : "SELECT * FROM show WHERE show_id = ?"
+
+    db.query(
+        query, [id], (err, result) => {
+            if (err) res.send({error: err})
+
+            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
+})
+
+// select the show that matches the id
+app.post("/getShow", (req, res) => {
+    const show_id = req.body.show_id
+    const errorMsg = "Could not get show from database."
+    
+
+    db.query(
+        "SELECT * FROM show WHERE show_id = ?", [show_id],
+        (err, result) => {
+            if (err) res.send({error: err})
+
+            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
+})
+
+// select all of the actors/ess of a show or movie
+
 
 
 PORT = 3001

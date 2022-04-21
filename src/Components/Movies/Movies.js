@@ -3,12 +3,15 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import * as cons from '../../constants';
 import { Card } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
+
 
 const Movies = () => {
+    let navigate = useNavigate()
     const [movies, setMovies] = useState([])
 
     const setMovieData = () => 
-        axios.get(cons.SERVER_PATH + 'getMovies').then((res) => {
+        axios.get(cons.SERVER_PATH + 'getAllMovies').then((res) => {
         if (res.data) {
             setMovies(res.data)
         } else {console.log("error")}
@@ -26,12 +29,16 @@ const Movies = () => {
         )
     }
 
+    const goToDetails = (params) => {
+        navigate("/details/movie/" + params.movie_id)
+    }
+
     const displayMovies = () => {
         let data = []
         for (let i = 0; i < movies.length; i++) {
             let current = movies[i]
             let element = 
-            <div className = 'grid-item' key = {i}>
+            <div className = 'grid-item' key = {i} onClick = {() => goToDetails(current)}>
                 {createCard(current.title, current.year)}
             </div>
             data.push(element)

@@ -1,0 +1,17 @@
+.row {
+    display: flex;
+}
+  
+.column {
+    flex: 50%;
+    padding: 30px;
+}
+
+.img-container {
+    margin-left: 100px;
+}
+
+.img {
+    width: 550px;
+    height: 750px;
+}
