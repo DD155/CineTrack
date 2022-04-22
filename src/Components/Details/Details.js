@@ -6,40 +6,35 @@ import axios from 'axios';
 
 const Details = () => {
     let { id, type } = useParams()
-    const [details, setDetails] = useState({})
-    const imgPath = type === 'movie' ? 
-        cons.MOVIE_IMG_PATH + details.title + '.jpg' : cons.MOVIE_IMG_PATH + details.title + '.jpg'
+    let imgPath
 
+    const [details, setDetails] = useState({})
+
+    // in case details doesn't get set properly from db
+    if (details.title !== null) {
+        imgPath = type === 'movie' ? 
+            cons.MOVIE_IMG_PATH + details.title + '.jpg' : cons.SHOW_IMG_PATH + details.title + '.jpg'
+    }
 
     id = parseInt(id)
 
     const loadDetails = () => {
-        if (type === 'movie') {
-            let req = cons.SERVER_PATH + "getDetails"
-            axios.post(req, {
-                id: id, 
-                type: type            
-            }).then((res) => {
-                if (res.data.message) alert(res.data.message)
-                else {
-                    let data = res.data[0]
-                    setDetails(data)
-                }
-            }).catch((err) => console.log(err))
-        } else {
-
-        }
+        let req = cons.SERVER_PATH + "getDetails"
+        axios.post(req, {
+            id: id, 
+            type: type            
+        }).then((res) => {
+            if (res.data.message) alert(res.data.message)
+            else {
+                console.log(res)
+                let data = res.data[0]
+                setDetails(data)
+            }
+        }).catch((err) => console.log(err))
     }
-
-    const displayDetails = () => {
-        if (details !== {})
-            console.log(details)
-    }
-    displayDetails()
 
     useEffect(() => {
         loadDetails()
-        window.scrollTo(0, 0)
     }, [])
 
     return (

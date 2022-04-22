@@ -49,9 +49,9 @@ app.post("/login", (req, res) => {
         "SELECT * FROM user WHERE email = ? AND password = ?",
         [email, password], (err, result) => {
             if (err) res.send({error: err})
-
-            // send the result if user was found, otherwise send an error message
-            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+            else 
+                // send the result if user was found, otherwise send an error message
+                result.length > 0 ? res.send(result) : res.send({message: errorMsg})
         }
     )
 })
@@ -62,22 +62,18 @@ app.get("/getAllMovies", (req, res) => {
         "SELECT * FROM movie",
         (err, result) => {
             if (err) res.send({error: err})
-
-            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+            else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
         }
     )
 })
 
-// select the movie that matches the id
-app.post("/getMovie", (req, res) => {
-    const movie_id = req.body.movie_id
-    const errorMsg = "Could not get movie from database."
+app.get("/getAllShows", (req, res) => {
+    const errorMsg = "Could not read movies from database."
     db.query(
-        "SELECT * FROM movie WHERE movie_id = ?", [movie_id],
+        "SELECT * FROM `show`",
         (err, result) => {
             if (err) res.send({error: err})
-
-            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+            else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
         }
     )
 })
@@ -88,26 +84,10 @@ app.post("/getDetails", (req, res) => {
     const type = req.body.type
     const errorMsg = "Could not get details from database."
     const query = type === 'movie' 
-        ? "SELECT * FROM movie WHERE movie_id = ?" : "SELECT * FROM show WHERE show_id = ?"
+        ? "SELECT * FROM movie WHERE movie_id = ?" : "SELECT * FROM `show` WHERE show_id = ?"
 
     db.query(
         query, [id], (err, result) => {
-            if (err) res.send({error: err})
-
-            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
-        }
-    )
-})
-
-// select the show that matches the id
-app.post("/getShow", (req, res) => {
-    const show_id = req.body.show_id
-    const errorMsg = "Could not get show from database."
-    
-
-    db.query(
-        "SELECT * FROM show WHERE show_id = ?", [show_id],
-        (err, result) => {
             if (err) res.send({error: err})
 
             result.length > 0 ? res.send(result) : res.send({message: errorMsg})
