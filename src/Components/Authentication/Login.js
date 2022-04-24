@@ -20,6 +20,7 @@ const Login = () => {
             else {
                 let data = res.data[0]
                 localStorage.setItem("name", data.first_name + " " + data.last_name)
+                localStorage.setItem("email", data.email)
                 localStorage.setItem("session", true)
                 navigate('/home')
             }

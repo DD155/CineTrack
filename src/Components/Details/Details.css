@@ -15,3 +15,35 @@
     width: 550px;
     height: 750px;
 }
+
+.icon {
+    margin-left: 5px;
+}
+
+.review-container {
+    margin-top: 50px;
+}
+
+.textarea {
+    margin: auto;
+    width: 50vw;
+    height: 200px;
+}
+
+.rating {
+    margin: auto;
+    width: 30vh;
+}
+
+.empty-msg { 
+    height: 50vh;
+    font-size: 26pt;
+    text-align: center;
+}
+
+#warning-alert, #success-alert {
+    width: 50vw;
+    margin: auto;
+    margin-bottom: 50px; 
+    padding: 20px;
+}

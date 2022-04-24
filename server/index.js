@@ -96,7 +96,46 @@ app.post("/getDetails", (req, res) => {
 })
 
 // select all of the actors/ess of a show or movie
+app.post("/getActors", (req, res) => {
+    const id = req.body.id
+    const type = req.body.type
+    const errorMsg = "Could not get details from database."
 
+    const selectMovieActor = "SELECT * FROM actor WHERE actor_id = " +
+        "ANY (SELECT actor FROM movie_actor WHERE movie = ?)"
+    const selectShowActor = "SELECT * FROM actor WHERE actor_id = " +
+    "ANY (SELECT actor FROM show_actor WHERE `show` = ?)"
+    const query = type === 'movie' ? selectMovieActor : selectShowActor
+
+    db.query(
+        query, [id], (err, result) => {
+            if (err) res.send({error: err})
+
+            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
+})
+
+// insert a new review on a movie/show
+app.post("/review", (req, res) => {
+    const type = req.body.type
+    const email = req.body.email
+    const description = req.body.description
+    const rating = req.body.rating
+    const author = req.body.author
+    const id = req.body.id
+
+    let data = [rating, description, author, email, null, null]
+    type === 'movie' ? data[4] = id : data[5] = id // set the movie/show id depending on type
+
+    db.query(
+        "INSERT INTO review (rating, description, author, email, movie_id, show_id) " + 
+        "VALUES (?, ?, ?, ?, ?, ?)", data,  (err, result) => {
+            if (result.length < 0) res.send({message: "Could not submit review."})
+            else res.send(result)
+        }
+    )
+})
 
 
 PORT = 3001
