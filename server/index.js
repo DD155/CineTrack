@@ -125,16 +125,35 @@ app.post("/review", (req, res) => {
     const author = req.body.author
     const id = req.body.id
 
-    let data = [rating, description, author, email, null, null]
+    const datetime = new Date().toLocaleString()
+
+    let data = [rating, description, author, email, null, null, datetime]
     type === 'movie' ? data[4] = id : data[5] = id // set the movie/show id depending on type
 
     db.query(
-        "INSERT INTO review (rating, description, author, email, movie_id, show_id) " + 
-        "VALUES (?, ?, ?, ?, ?, ?)", data,  (err, result) => {
+        "INSERT INTO review (rating, description, author, email, movie_id, show_id, date) " + 
+        "VALUES (?, ?, ?, ?, ?, ?, ?)", data,  (err, result) => {
             if (result.length < 0) res.send({message: "Could not submit review."})
             else res.send(result)
         }
     )
+})
+
+app.post("/getReviews", (req, res) => {
+        const id = req.body.id
+        const type = req.body.type
+        const errorMsg = "Could not get reviews from database."
+
+        const query = type === 'movie' ? "SELECT * from review WHERE movie_id = ?" : 
+            "SELECT * from review WHERE show_id = ?"
+        
+        db.query(
+            query, [id], (err, result) => {
+                if (err) res.send({error: err})
+    
+                result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+            }
+        )
 })
 
 

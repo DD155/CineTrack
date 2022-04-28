@@ -3,14 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, FloatingLabel, Form } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
 import * as cons from '../../constants';
-import question_mark from '../../assets/images/question-circle.svg';
 import axios from 'axios';
 import { Alert } from 'react-bootstrap';
 
 const Details = () => {
     let { id, type } = useParams()
-
-    const [showAlert, setShowAlert] = useState(false)
 
     const [actors, setActors] = useState([])
     const [details, setDetails] = useState({})
@@ -30,6 +27,19 @@ const Details = () => {
 
     id = parseInt(id)
 
+    const loadReviews = () => {
+        let req = cons.SERVER_PATH + "getReviews"
+        axios.post(req, {
+            id: id, 
+            type: type            
+        }).then((res) => {
+            if (res.data.message) console.log(res.data.message)
+            else {
+                setReviews(res.data)
+            }
+        }).catch((err) => console.log(err))
+    }
+
     const loadDetails = () => {
         let req = cons.SERVER_PATH + "getDetails"
         axios.post(req, {
@@ -38,7 +48,6 @@ const Details = () => {
         }).then((res) => {
             if (res.data.message) alert(res.data.message)
             else {
-                console.log(res)
                 let data = res.data[0]
                 setDetails(data)
             }
@@ -73,17 +82,39 @@ const Details = () => {
         return arr
     }
 
+    const displayReviews = () => {
+        let arr = []
+
+        for (let i = 0; i < reviews.length; i++) {
+            let current = reviews[i]
+            arr.push(
+                <div>
+                    <div className = 'reviewContainer' key = {i} >
+                        <div className = 'author-container' style={{display: 'block'}}>
+                            <div className = 'author'>{current.author}</div>
+                            <div className = 'rating'>{current.rating} / 5</div>
+                            <div className = 'date'> Created on: <br/> {current.date} </div>
+                        </div>
+                        <div className = 'vertical-line'></div>
+                        <div className = 'description-text'> {current.description} </div>
+                    </div>
+                </div>
+                
+            )
+        }
+        return arr
+    }
+
     const getFirstName = () => {
         let name = localStorage.getItem("name")
         return name.split(" ")[0]
     }
 
     const checkValidInput = () => {
-        return description !== '' && rating !== -1
+        return description !== '' && description.length <= 500 && rating !== -1
     }
 
     const submitReview = () => {
-        console.log(checkValidInput())
         if (!checkValidInput()) {
             document.getElementById('warning-alert').style.display = 'block'
             document.getElementById('success-alert').style.display = 'none'
@@ -109,6 +140,7 @@ const Details = () => {
 
     useEffect(() => {
         loadDetails()
+        loadReviews()
         loadActors()
     }, [])
 
@@ -140,12 +172,13 @@ const Details = () => {
 
                 <Alert id = 'warning-alert' variant='warning' style = {{display:'none'}}>
                     <Alert.Heading> Error </Alert.Heading>
-                    <p> Please check that you have a valid rating or if your comment is not empty.</p>
+                    <p> Please check that you have a valid rating or if your comment is not empty 
+                        (Maximum length is 500 characters).</p>
                 </Alert>
             </div>
 
             <Form className = 'text-center'>
-                <Form.Select className = 'rating' as="select" value={rating}
+                <Form.Select className = 'rating-select' as="select" value={rating}
                 onChange={e => setRating(parseInt(e.target.value))}>
                     <option value={-1}>Select rating...</option>
                     <option value={1}>1</option>
@@ -171,7 +204,7 @@ const Details = () => {
             { reviews.length === 0 ? 
             <div className = 'empty-msg d-flex flex-column min-vh-100 justify-content-center align-items-center'>
                 No reviews yet...
-            </div> : ''
+            </div> : displayReviews()
             }
         </div>        
         <br/> 

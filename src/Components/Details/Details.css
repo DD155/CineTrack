@@ -30,10 +30,7 @@
     height: 200px;
 }
 
-.rating {
-    margin: auto;
-    width: 30vh;
-}
+
 
 .empty-msg { 
     height: 50vh;
@@ -46,4 +43,56 @@
     margin: auto;
     margin-bottom: 50px; 
     padding: 20px;
+}
+
+.reviewContainer {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    width: 60vw;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+    display: flex;
+    min-height: 30vh;
+    overflow: hidden;
+}
+
+.author-container {
+    text-align: left;
+}
+
+.author {
+    font-size: 20pt; 
+}
+
+
+
+.vertical-line {
+    border-right: 1px solid black;
+    margin-left: 20px;
+    margin-right: 10px;
+    min-height: 30vh;
+    overflow: hidden;
+}
+
+.rating {
+    padding: 50% 0;
+    text-align: center;
+    font-size: 26pt;
+}
+
+.description-text {
+    padding: 20px;
+    word-wrap: break-word;
+    width: 80%;
+    height: 100%;
+    display: block;
+    line-height: 1.7;
+}
+
+.rating-select {
+    width: 30vh;
+    margin: auto;
 }
