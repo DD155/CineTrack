@@ -89,8 +89,7 @@ app.post("/getDetails", (req, res) => {
     db.query(
         query, [id], (err, result) => {
             if (err) res.send({error: err})
-
-            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+            else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
         }
     )
 })
@@ -110,8 +109,7 @@ app.post("/getActors", (req, res) => {
     db.query(
         query, [id], (err, result) => {
             if (err) res.send({error: err})
-
-            result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+            else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
         }
     )
 })
@@ -133,12 +131,14 @@ app.post("/review", (req, res) => {
     db.query(
         "INSERT INTO review (rating, description, author, email, movie_id, show_id, date) " + 
         "VALUES (?, ?, ?, ?, ?, ?, ?)", data,  (err, result) => {
+            console.log(err)
             if (result.length < 0) res.send({message: "Could not submit review."})
             else res.send(result)
         }
     )
 })
 
+// get all reviews of the currently selected movie or show
 app.post("/getReviews", (req, res) => {
         const id = req.body.id
         const type = req.body.type
@@ -150,10 +150,45 @@ app.post("/getReviews", (req, res) => {
         db.query(
             query, [id], (err, result) => {
                 if (err) res.send({error: err})
-    
-                result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+                else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
             }
         )
+})
+
+// update the current user's review
+app.post("/editReview", (req, res) => {
+    const email = req.body.email
+    const desc = req.body.description
+    const rating = req.body.rating
+    const id = req.body.id 
+    const type = req.body.type
+
+    const query = type === 'movie' ? "UPDATE review SET description = ?, rating = ? WHERE email = ? AND movie_id = ?" :
+        "UPDATE review SET description = ?, rating = ? WHERE email = ? AND show_id = ?"
+
+    db.query(
+        query, [desc, rating, email, id], (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: err})
+        }
+    )
+})
+
+// delete a user's review based on their email
+app.post("/deleteReview", (req, res) => {
+    const email = req.body.email
+    const type = req.body.type
+    const id = req.body.id
+
+    const query = type === 'movie' ? "DELETE FROM review WHERE email = ? AND movie_id = ?" : 
+        "DELETE FROM review WHERE email = ? AND show_id = ?"
+
+    db.query(
+        query, [email, id], (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: err})
+        }
+    )
 })
 
 

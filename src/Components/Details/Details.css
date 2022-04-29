@@ -96,3 +96,15 @@
     width: 30vh;
     margin: auto;
 }
+
+.edit, .delete {
+    cursor: pointer;
+}
+
+.delete {
+    color: red;
+}
+
+.edit {
+    color: blue;
+}

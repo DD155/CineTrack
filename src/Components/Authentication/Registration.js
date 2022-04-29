@@ -31,6 +31,7 @@ const Registration = () => {
             else {
                 localStorage.setItem("name", firstName + " " + lastName)
                 localStorage.setItem("session", true)
+                localStorage.setItem("email", email)
                 navigate("/home")
             }
         })

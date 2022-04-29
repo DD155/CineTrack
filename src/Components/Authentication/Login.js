@@ -47,7 +47,7 @@ const Login = () => {
                         </Form.Group>
                         <div className = 'text-center'>
                             <Button className = 'btn btn-primary btn-sx' onClick = {handleLogin}> Login </Button> <br/><br/>
-                            <Link to = "../registration">Already have an account? Login here</Link>
+                            <Link to = "../registration">Don't have an account? Register here</Link>
                         </div>
                     </Form>
                 </Card.Body>
