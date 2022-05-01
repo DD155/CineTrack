@@ -11,6 +11,7 @@ import Shows from './Components/Shows/Shows.js';
 import Movies from './Components/Movies/Movies.js';
 import Details from './Components/Details/Details.js';
 import ScrollToTop from './Components/ScrollToTop.js';
+import Collection from './Components/Collection/Collection.js';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -25,6 +26,7 @@ root.render(
                 <Route path="login" element = {<Login />} />
                 <Route path="shows" element = {<Shows />} />
                 <Route path="movies" element = {<Movies />} />
+                <Route path="collection" element = {<Collection />} />
                 <Route path="details/:type/:id" element = {<Details />} />
                 <Route path="/" element={<Navigate to="/home" replace />} />
             </Routes>

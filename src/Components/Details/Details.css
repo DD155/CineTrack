@@ -108,3 +108,32 @@
 .edit {
     color: blue;
 }
+
+.title {
+    font-size: 32pt;
+}
+
+.year {
+    font-size: 22pt;
+}
+
+.content {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 80%;
+    font-size: 16pt;
+}
+
+.actor-heading {
+    font-size: 20pt;
+}
+
+.actor {
+    font-size: 14pt; 
+}
+
+.collection-btn {
+    margin-top: 5vh;
+    width: 250px;
+    height: 100px;
+}

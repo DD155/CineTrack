@@ -34,6 +34,7 @@ const Movies = () => {
     }
 
     const displayMovies = () => {
+        console.log(movies)
         let data = []
         for (let i = 0; i < movies.length; i++) {
             let current = movies[i]
@@ -53,7 +54,7 @@ const Movies = () => {
     return (
     <div className="App">
         <div>
-            <h1> Movies! </h1>  
+            <h1 className = 'text-center mt-3'> Movies</h1>  
             {displayMovies()}
         </div>
     </div>

@@ -68,9 +68,58 @@ app.get("/getAllMovies", (req, res) => {
 })
 
 app.get("/getAllShows", (req, res) => {
-    const errorMsg = "Could not read movies from database."
+    const errorMsg = "Could not read shows from database."
     db.query(
         "SELECT * FROM `show`",
+        (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
+})
+
+app.post("/getShow", (req, res) => {
+    const id = req.body.id
+
+    const errorMsg = "Could not read show from database."
+    db.query(
+        "SELECT * FROM `show` WHERE show_id = ?", [id],
+        (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
+})
+
+app.post("/getShows", (req, res) => {
+    const id = req.body.id
+
+    const errorMsg = "Could not read show from database."
+
+    let query = "SELECT * FROM `show` WHERE show_id = ?"
+
+    for (let i = 1; i < id.length; i++) {
+        query += " OR show_id = ?"
+    }
+
+    console.log(query, id)
+
+    db.query(
+        query, id,
+        (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
+})
+
+
+app.post("/getMovie", (req, res) => {
+    const id = req.body.id
+
+    const errorMsg = "Could not read movie from database."
+    db.query(
+        "SELECT * FROM movie WHERE movie_id = ?", [id],
         (err, result) => {
             if (err) res.send({error: err})
             else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
@@ -140,19 +189,19 @@ app.post("/review", (req, res) => {
 
 // get all reviews of the currently selected movie or show
 app.post("/getReviews", (req, res) => {
-        const id = req.body.id
-        const type = req.body.type
-        const errorMsg = "Could not get reviews from database."
+    const id = req.body.id
+    const type = req.body.type
+    const errorMsg = "Could not get reviews from database."
 
-        const query = type === 'movie' ? "SELECT * from review WHERE movie_id = ?" : 
-            "SELECT * from review WHERE show_id = ?"
-        
-        db.query(
-            query, [id], (err, result) => {
-                if (err) res.send({error: err})
-                else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
-            }
-        )
+    const query = type === 'movie' ? "SELECT * from review WHERE movie_id = ?" : 
+        "SELECT * from review WHERE show_id = ?"
+    
+    db.query(
+        query, [id], (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
 })
 
 // update the current user's review
@@ -187,6 +236,77 @@ app.post("/deleteReview", (req, res) => {
         query, [email, id], (err, result) => {
             if (err) res.send({error: err})
             else result.length > 0 ? res.send(result) : res.send({message: err})
+        }
+    )
+})
+
+// gets the current user's collection
+app.post("/getCollection", (req, res) => {
+    const email = req.body.email
+
+    db.query(
+        "SELECT * FROM collection WHERE email = ?",
+        [email], (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
+})
+
+// adds a show or movie to the current user's collection
+app.post("/addToCollection", (req, res) => {
+    const email = req.body.email
+    const type = req.body.type
+    const id = req.body.id
+
+    let data = [email, false, null, null]
+    type === 'movie' ? data[3] = id : data[2] = id // set the movie/show id depending on type
+
+    db.query(
+        "INSERT INTO collection (email, isWatched, show_id, movie_id) " + 
+        "VALUES (?, ?, ?, ?)", data,  (err, result) => {
+            if (result.length < 0) res.send({message: "Could not submit review."})
+            else res.send(result)
+        }
+    )
+})
+
+app.post("/deleteFromCollection", (req, res) => {
+    const email = req.body.email
+    const type = req.body.type
+    const id = req.body.id
+
+    const query = type === 'movie' ? "DELETE FROM collection WHERE email = ? AND movie_id = ?" : 
+        "DELETE FROM collection WHERE email = ? AND show_id = ?"
+
+    db.query(
+        query, [email, id], (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: err})
+        }
+    )
+})
+
+app.post("/getWatched", (req, res) => {
+    const email = req.body.email
+
+    db.query(
+        "SELECT * FROM collection WHERE email = ? AND isWatched = 1",
+        [email], (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: "Error"})
+        }
+    )
+})
+
+app.post("/getNotWatched", (req, res) => {
+    const email = req.body.email
+
+    db.query(
+        "SELECT * FROM collection WHERE email = ? AND isWatched = 0",
+        [email], (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: "Error"})
         }
     )
 })

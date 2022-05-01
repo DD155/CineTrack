@@ -1,14 +1,14 @@
 import './Details.css';
 import React, { useEffect, useState } from 'react';
-import { Button, FloatingLabel, Form } from 'react-bootstrap'
+import { Button, FloatingLabel, Form, Alert, Modal } from 'react-bootstrap'
 import { useParams } from 'react-router-dom';
 import * as cons from '../../constants';
 import axios from 'axios';
-import { Alert, Modal } from 'react-bootstrap';
 
 const Details = () => {
     let { id, type } = useParams()
 
+    const [isAdded, setIsAdded] = useState(false)
     const [actors, setActors] = useState([])
     const [details, setDetails] = useState({})
     const [reviews, setReviews] = useState([])
@@ -73,13 +73,36 @@ const Details = () => {
         }).catch((err) => console.log(err))
     }
 
+    // used to see if the current show/movie is on the user's collection already or not
+    const loadCollection = () => {
+        let req = cons.SERVER_PATH + "getCollection"
+        axios.post(req, {
+            email: localStorage.getItem("email")        
+        }).then((res) => {
+            if (res.data.message) alert(res.data.message)
+            else {
+                let data = res.data
+                console.log(data)
+                checkIfAddedToCollection(data)
+            }
+        }).catch((err) => console.log(err))
+    }
+
+    const checkIfAddedToCollection = (collection) => {
+        for (let i = 0; i < collection.length; i++) {
+            // get the id depending on if the user is viewing a movie or show currently
+            let current = type === 'movie' ? collection[i].movie_id : collection[i].show_id
+            if (current === id) setIsAdded(true)
+        }
+    }
+
     const displayActors = () => {
         let arr = []
 
         for (let i = 0; i < actors.length; i++) {
             let current = actors[i]
             arr.push(
-                <div key = {i} >
+                <div className = 'actor' key = {i} >
                     {current.first_name + " " + current.last_name}
                 </div>
             )
@@ -199,10 +222,52 @@ const Details = () => {
             submitEditedReview()
     }
 
+    const addToCollection = () => {
+        let req = cons.SERVER_PATH + "addToCollection"
+        console.log(id)
+        axios.post(req, {
+            email: localStorage.getItem("email"),
+            id: id, 
+            type: type 
+        }).then((res) => {
+            console.log(isAdded)
+            if (res.data.err) {
+                alert(res.data.err)
+            }
+        }).catch((err) => console.log(err))
+    }
+
+    const removeFromCollection = () => {
+        let req = cons.SERVER_PATH + "deleteFromCollection"
+        axios.post(req, {
+            email: localStorage.getItem("email"),
+            id: id, 
+            type: type 
+        }).then((res) => {
+            if (res.data.err) {
+                alert(res.data.err)
+            } else console.log("deleted")
+        }).catch((err) => console.log(err))
+    }
+
+    const handleCollectionSubmit = () => {
+        let btn = document.getElementById('collection-btn')
+        if (!isAdded) { 
+            addToCollection()
+            btn.innerHTML = "Added"
+            setIsAdded(true)
+        } else {
+            removeFromCollection()
+            btn.innerHTML = "Add to Collection"
+            setIsAdded(false)
+        }
+    }
+
     useEffect(() => {
         loadDetails()
         loadReviews()
         loadActors()
+        loadCollection()
     }, [])
 
     return (
@@ -230,9 +295,13 @@ const Details = () => {
             <div className="column">
                 <div className = 'title'> {details.title} </div>
                 <div className = 'year'> {details.year} </div>
+                <div className = 'content'> {details.description} </div>
                 <div>
+                    <div className = 'actor-heading'>Main Actors</div>
                     {displayActors()}
                 </div>
+                <Button id='collection-btn' size="lg" onClick = {() => handleCollectionSubmit()} className = 'collection-btn'>
+                    { isAdded ? "Added" : "Add to Collection" } </Button>
             </div>
         </div>
         <hr className = 'mt-2 mb-3'/>

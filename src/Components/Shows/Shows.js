@@ -55,7 +55,7 @@ const Shows = () => {
     return (
     <div className="App">
         <div>
-            <h1> Shows! </h1>  
+            <h1 className = 'text-center mt-3'> Shows</h1>  
             {displayShows()}
         </div>
     </div>
