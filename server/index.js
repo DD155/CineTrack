@@ -311,6 +311,21 @@ app.post("/getNotWatched", (req, res) => {
     )
 })
 
+app.post("/toggleCollectionStatus", (req, res) => {
+    const id = req.body.id
+    const status = req.body.status
+
+    const query = "UPDATE collection SET isWatched = ? WHERE id = ?"
+    
+    db.query(
+        query, [!status, id], (err, result) => {
+            console.log(result)
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: err})
+        }
+    )
+})
+
 
 PORT = 3001
 app.listen(PORT, () => {

@@ -281,7 +281,7 @@ const Details = () => {
             <Button variant="secondary" onClick={closeModal}>
                 Close
             </Button>
-            <Button variant="primary" onClick={deleteReview}>
+            <Button variant="danger" onClick={deleteReview}>
                 Delete
             </Button>
             </Modal.Footer>
