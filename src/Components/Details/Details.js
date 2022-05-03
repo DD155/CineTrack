@@ -8,6 +8,9 @@ import axios from 'axios';
 const Details = () => {
     let { id, type } = useParams()
 
+    const session = localStorage.getItem("session")
+    console.log(session)
+
     const [isAdded, setIsAdded] = useState(false)
     const [actors, setActors] = useState([])
     const [details, setDetails] = useState({})
@@ -51,7 +54,7 @@ const Details = () => {
             id: id, 
             type: type            
         }).then((res) => {
-            if (res.data.message) alert(res.data.message)
+            if (res.data.message) console.log(res.data.message)
             else {
                 let data = res.data[0]
                 setDetails(data)
@@ -65,7 +68,7 @@ const Details = () => {
             id: id, 
             type: type            
         }).then((res) => {
-            if (res.data.message) alert(res.data.message)
+            if (res.data.message) console.log(res.data.message)
             else {
                 let data = res.data
                 setActors(data)
@@ -79,7 +82,7 @@ const Details = () => {
         axios.post(req, {
             email: localStorage.getItem("email")        
         }).then((res) => {
-            if (res.data.message) alert(res.data.message)
+            if (res.data.message) console.log(res.data.message)
             else {
                 let data = res.data
                 console.log(data)
@@ -144,7 +147,7 @@ const Details = () => {
             id: id, 
             type: type 
         }).then((res) => {
-            if (res.data.err) alert(res.data.err)
+            if (res.data.err) console.log(res.data.err)
             else window.location.reload()
         }).catch((err) => console.log(err))
     }
@@ -158,6 +161,7 @@ const Details = () => {
 
     const getFirstName = () => {
         let name = localStorage.getItem("name")
+        console.log(name)
         return name.split(" ")[0]
     }
 
@@ -182,7 +186,7 @@ const Details = () => {
             description: description,
             rating: rating 
         }).then((res) => {
-            if (res.data.message) alert(res.data.message)
+            if (res.data.message) console.log(res.data.message)
             else {
                 document.getElementById('warning-alert').style.display = 'none'
                 document.getElementById('success-alert').style.display = 'block'
@@ -197,9 +201,10 @@ const Details = () => {
             description: description,
             rating: rating,
             id: id, 
-            type: type 
+            type: type,
+            name: getFirstName()
         }).then((res) => {
-            if (res.data.err) alert(res.data.err)
+            if (res.data.err) console.log(res.data.err)
             else {
                 document.getElementById('warning-alert').style.display = 'none'
                 document.getElementById('success-alert').style.display = 'block'
@@ -230,9 +235,8 @@ const Details = () => {
             id: id, 
             type: type 
         }).then((res) => {
-            console.log(isAdded)
             if (res.data.err) {
-                alert(res.data.err)
+                console.log(res.data.err)
             }
         }).catch((err) => console.log(err))
     }
@@ -245,7 +249,7 @@ const Details = () => {
             type: type 
         }).then((res) => {
             if (res.data.err) {
-                alert(res.data.err)
+                console.log(res.data.err)
             } else console.log("deleted")
         }).catch((err) => console.log(err))
     }
@@ -300,8 +304,10 @@ const Details = () => {
                     <div className = 'actor-heading'>Main Actors</div>
                     {displayActors()}
                 </div>
+                { session ? 
                 <Button id='collection-btn' size="lg" onClick = {() => handleCollectionSubmit()} className = 'collection-btn'>
-                    { isAdded ? "Added" : "Add to Collection" } </Button>
+                    { isAdded ? "Added" : "Add to Collection" } </Button> : ''
+                }
             </div>
         </div>
         <hr className = 'mt-2 mb-3'/>
@@ -322,6 +328,7 @@ const Details = () => {
                 </Alert>
             </div>
 
+            {session ? 
             <Form className = 'text-center'>
                 <Form.Select id = 'select' className = 'rating-select' as="select" value={rating}
                 onChange={e => setRating(parseInt(e.target.value))}>
@@ -342,7 +349,8 @@ const Details = () => {
                     </FloatingLabel>
                 </Form.Group>
                 <Button onClick = {() => submitReview()}> Submit </Button>
-            </Form>
+            </Form> : <div className='text-center'> You must be logged in to submit a review. </div> 
+            }
         </div> <br/>
         <hr className = 'mt-2 mb-3'/>
         <div className = 'reviews-container'>

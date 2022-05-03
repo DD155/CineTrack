@@ -27,7 +27,7 @@ const Registration = () => {
             last_name: lastName,
             password: password
         }).then((res) => {
-            if (res.data.message.length > 0) alert(res.data.message)
+            if (res.data.message !== "") alert(res.data.message)
             else {
                 localStorage.setItem("name", firstName + " " + lastName)
                 localStorage.setItem("session", true)
@@ -39,7 +39,8 @@ const Registration = () => {
 
     const checkValidCredentials = () => {
         return (password === confirmPassword) && (firstName.length < 15) && (lastName.length < 15)
-        && (email.indexOf('@') !== -1) && (email.indexOf('.') !== -1)
+            && (email.indexOf('@') !== -1) && (email.indexOf('.') !== -1)
+            && (!/[^a-zA-Z]/.test(firstName)) && (!/[^a-zA-Z]/.test(lastName))
     }
 
 return (

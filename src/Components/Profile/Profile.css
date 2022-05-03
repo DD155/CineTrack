@@ -1,0 +1,40 @@
+.details-container {
+    margin-left: 5vw;
+    height: 70vh;
+    width: 30vw;
+    border-radius: 5%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 30px;
+    margin-top: 10vh;
+}
+
+.details-container > div {
+    text-align: center;
+}
+
+.name {
+    font-size: 28pt;
+}
+
+.email {
+    font-size: 16pt;
+}
+
+.more-details-container {
+    margin-top: 5vh;
+}
+
+.more-details-container > div {
+    font-size: 16pt;
+}
+
+.profile-btn {
+    margin-top: 15vh;
+}
+
+.btn-container > Button {
+    margin-left: 1vw;
+    margin-right: 1vw;
+
+}
+

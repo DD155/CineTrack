@@ -33,7 +33,7 @@ app.post("/register", (req, res) => {
         "INSERT INTO user (email, first_name, last_name, password) " + 
         "VALUES (?, ?, ?, ?)", [email, first_name, last_name, password], 
         (err, result) => {
-            if (result.length < 0) res.send({message: "This email is already in use."})
+            if (err) res.send({message: "This email is already in use."}) 
             else res.send(result)
         }
     )
@@ -52,6 +52,35 @@ app.post("/login", (req, res) => {
             else 
                 // send the result if user was found, otherwise send an error message
                 result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+        }
+    )
+})
+
+app.post("/deleteUser", (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+
+    db.query(
+        "DELETE FROM user WHERE email = ? AND password = ?",
+        [email, password], (err, result) => {
+            if (err) res.send({error: err}) 
+            result.affectedRows > 0 ? res.send(result) : res.send({message: "Password error"})
+        }
+    )
+})
+
+app.post("/updateUserInfo", (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+    const firstName = req.body.firstName
+    const lastName = req.body.lastName
+
+    const query = "UPDATE user SET first_name = ?, last_name = ? WHERE email = ? AND password = ?"
+    
+    db.query(
+        query, [firstName, lastName, email, password], (err, result) => {
+            if (err) res.send({error: err})
+            else result.affectedRows === 1 ? res.send(result) : res.send({message: "Password error"})
         }
     )
 })
@@ -101,8 +130,6 @@ app.post("/getShows", (req, res) => {
     for (let i = 1; i < id.length; i++) {
         query += " OR show_id = ?"
     }
-
-    console.log(query, id)
 
     db.query(
         query, id,
@@ -180,7 +207,6 @@ app.post("/review", (req, res) => {
     db.query(
         "INSERT INTO review (rating, description, author, email, movie_id, show_id, date) " + 
         "VALUES (?, ?, ?, ?, ?, ?, ?)", data,  (err, result) => {
-            console.log(err)
             if (result.length < 0) res.send({message: "Could not submit review."})
             else res.send(result)
         }
@@ -204,6 +230,18 @@ app.post("/getReviews", (req, res) => {
     )
 })
 
+app.post("/getUsersReviews", (req, res) => {
+    const email = req.body.email
+    const query = "SELECT * from review WHERE email = ?"    
+
+    db.query(
+        query, [email], (err, result) => {
+            if (err) res.send({error: err})
+            else result.length > 0 ? res.send(result) : res.send({message: "Could not get reviews"})
+        }
+    )
+})
+
 // update the current user's review
 app.post("/editReview", (req, res) => {
     const email = req.body.email
@@ -211,12 +249,13 @@ app.post("/editReview", (req, res) => {
     const rating = req.body.rating
     const id = req.body.id 
     const type = req.body.type
+    const name = req.body.name
 
-    const query = type === 'movie' ? "UPDATE review SET description = ?, rating = ? WHERE email = ? AND movie_id = ?" :
-        "UPDATE review SET description = ?, rating = ? WHERE email = ? AND show_id = ?"
+    const query = type === 'movie' ? "UPDATE review SET description = ?, rating = ?, author = ? WHERE email = ? AND movie_id = ?" :
+        "UPDATE review SET description = ?, rating = ?, author = ? WHERE email = ? AND show_id = ?"
 
     db.query(
-        query, [desc, rating, email, id], (err, result) => {
+        query, [desc, rating, name, email, id], (err, result) => {
             if (err) res.send({error: err})
             else result.length > 0 ? res.send(result) : res.send({message: err})
         }
@@ -248,7 +287,7 @@ app.post("/getCollection", (req, res) => {
         "SELECT * FROM collection WHERE email = ?",
         [email], (err, result) => {
             if (err) res.send({error: err})
-            else result.length > 0 ? res.send(result) : res.send({message: errorMsg})
+            else result.length > 0 ? res.send(result) : res.send({message: "could not get collection"})
         }
     )
 })
@@ -319,7 +358,6 @@ app.post("/toggleCollectionStatus", (req, res) => {
     
     db.query(
         query, [!status, id], (err, result) => {
-            console.log(result)
             if (err) res.send({error: err})
             else result.length > 0 ? res.send(result) : res.send({message: err})
         }

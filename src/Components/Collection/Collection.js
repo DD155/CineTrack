@@ -19,7 +19,11 @@ const Collection = () => {
         axios.post(req, {
             email: localStorage.getItem("email")        
         }).then((res) => {
-            if (res.data.message) alert(res.data.message)
+            console.log(res.data.message)
+            if (res.data.message !== undefined) {
+                //document.getElementById("collection-container").style.display = 'none'
+                //document.getElementById("empty").style.display = 'block'
+            }
             else {
                 let data = res.data
                 let arrWatched = [], arrNotWatched = []
@@ -140,22 +144,26 @@ const Collection = () => {
     }, [])
 
     return (
-    <div className="App">
-        <div>
-            <h1 className = 'text-center mt-3'> Collection</h1>  
+    <div className = 'mt-3'>
+        <div id = 'empty' className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+                Add some movies or shows to your collection to see them here.
+        </div>
+        <div id = 'collection-container'>
             <div className = 'watched-container'>
                 <h2>Watched</h2>
                 <div className = 'watched'></div>
-                {displayContent(watched)}
+                {watched.length === 0 ? 
+                <div className = 'text-center'>Mark movies or shows as watched to list them here</div>
+                : displayContent(watched)}
                 <hr/>
             </div>
             <div className = 'not-watched-container'>
                 <h2>To Watch</h2>
                 <div className = 'not-watched'></div>
-                {displayContent(notWatched)}
-                <hr/>
-            </div>
-            
+                {notWatched.length === 0 ? 
+                <div className = 'text-center' style={{height: '20vh'}}>Movies or shows that you haven't watched will be here</div>
+                : displayContent(notWatched)}
+            </div>       
         </div>
     </div>
     );
