@@ -29,7 +29,7 @@ const Home = () => {
                         <div style={{color:'#912F40', display:'inline-block'}}>CineTrack</div>
                     </h1>
                     <p className='home-desc'>
-                        CineTrack is a movie and TV show curator website that emphasizes minimalism and simplicty. This website lets users check out a catalog of movies and shows, keep track of what they want to watch, 
+                        CineTrack is a movie and TV show curator website that emphasizes minimalism and simplicity. This website lets users check out a catalog of movies and shows, keep track of what they want to watch, 
                         and engage with the community by leaving reviews. 
                     </p>
                     {session === null ? 
