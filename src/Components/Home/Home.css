@@ -1,0 +1,72 @@
+.home-container {
+    overflow: hidden;
+}
+
+Carousel > Carousel.Item {
+    margin-bottom: 50vh;
+}
+
+img {
+   height: 91.4vh;
+}
+
+.home-desc {
+    font-size: 16pt;
+}
+
+.caption-text {
+    color: #EEEEEE;    
+}
+
+.caption-text > Button {
+    margin-top: 10vh;
+}
+
+
+.caption-img {
+    margin-bottom: 15vh;
+}
+
+.caption-img > img{
+    margin-top: 10vh;
+}
+
+.collection-pic {
+    width: 60vw;
+    height: 45vh;
+}
+
+.slide-pic {
+    width: 55vw;
+    height: 50vh;
+}
+
+.bg {
+    background-position: 'center';
+    background-size: 'cover';
+    background-repeat: 'no-repeat';
+    width: '100vw';
+    height: '100vh';
+    background-image: url(../../assets/images/landing_bg.jpg);
+    color: #EEEEEE
+}
+
+.card-title-bg {
+    color: #EEEEEE;
+    border-color: #40434E !important; 
+    background-color: #40434E;
+}
+
+.card-content {
+    color: #080705;
+}
+
+.card {
+    border: #40434E;
+}
+
+.page-title {
+    color: #912F40;
+}
+
+

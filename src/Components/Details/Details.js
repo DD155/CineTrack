@@ -122,7 +122,7 @@ const Details = () => {
 
             arr.push(
                 <div key = {i}>
-                    <div className = 'reviewContainer' key = {i}>
+                    <div className = 'review-container' key = {i}>
                         <div className = 'author-container' style={{display: 'block'}}>
                             {isOwnReview ? <div className = 'delete' onClick = {() => openModal()} > Delete </div> : ''}
                             {isOwnReview ? <div className = 'edit' onClick = {() => editReview(current)}> Edit </div> : ''}
@@ -275,7 +275,7 @@ const Details = () => {
     }, [])
 
     return (
-    <div className="App">
+    <div className="bg detail-container">
         <Modal show={show} onHide={closeModal}>
             <Modal.Header closeButton>
             <Modal.Title>Delete Review</Modal.Title>
@@ -297,7 +297,7 @@ const Details = () => {
                 </div>
             </div>
             <div className="column">
-                <div className = 'title'> {details.title} </div>
+                <div className = 'page-title title'> {details.title} </div>
                 <div className = 'year'> {details.year} </div>
                 <div className = 'content'> {details.description} </div>
                 <div>
@@ -341,7 +341,7 @@ const Details = () => {
                 </Form.Select>
                 <br/>
                 <Form.Group className = "textarea mb-3">
-                    <FloatingLabel label = "Comments"> 
+                    <FloatingLabel style = {{color: 'black'}}className = 'floating-label' label = "Comments"> 
                         <Form.Control as="textarea" rows = "5" placeholder="comment"
                         value = {description}
                         style = {{height: '20vh'}}

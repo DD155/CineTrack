@@ -33,7 +33,7 @@ const Navbar = () => {
                 <li> <Link className={'nav-links'} to={'/profile'}> Profile </Link></li> 
                  : ''} 
                 {isSignedIn ?
-                <li><Link className={'nav-links'} to={'/login'} onClick={logout}> Logout </Link> </li> 
+                <li><Link className={'nav-links'} to={'/home'} onClick={logout}> Logout </Link> </li> 
                  : ''}
             </ul>
         </nav>

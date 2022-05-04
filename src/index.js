@@ -18,7 +18,7 @@ import Profile from './Components/Profile/Profile.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Router>
-        <div style={{/*backgroundColor: '#40434E', */height: '100vh'}}>
+        <div className = 'bg' style={{/*backgroundColor: '#40434E', */height: '100vh'}}>
             <Navbar/>
             <ScrollToTop/>
             <Routes>

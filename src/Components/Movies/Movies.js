@@ -20,10 +20,10 @@ const Movies = () => {
     const createCard = (title, year) => {
         let path = cons.MOVIE_IMG_PATH + title + '.jpg' // image path 
         return (
-            <Card style={{ width: '18rem' }}>
+            <Card className = 'd-flex' style={{ width: '19rem' }}>
                 <Card.Img style={{height: '450px'}} variant="top" src= {path} />
-                <Card.Body>
-                    <Card.Title>{title + ' (' + year + ')'}</Card.Title>
+                <Card.Body className='align-items-center '>
+                    <Card.Title className ='card-content m-auto'>{title + ' (' + year + ')'}</Card.Title>
                 </Card.Body>
             </Card>
         )
@@ -34,7 +34,6 @@ const Movies = () => {
     }
 
     const displayMovies = () => {
-        console.log(movies)
         let data = []
         for (let i = 0; i < movies.length; i++) {
             let current = movies[i]
@@ -52,9 +51,9 @@ const Movies = () => {
     }, [])
 
     return (
-    <div className="App">
+    <div className="bg">
         <div>
-            <h1 className = 'text-center mt-3'> Movies</h1>  
+            <h1 className = 'text-center mt-3' style = {{color: '#912F40'}}> Movies</h1>  
             {displayMovies()}
         </div>
     </div>

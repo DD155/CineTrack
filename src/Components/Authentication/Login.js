@@ -29,19 +29,19 @@ const Login = () => {
 
     return (
         <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
-            <Card>
-                <Card.Header className = 'text-center' style = {{fontSize: 25}}>
+            <Card className = 'card'>
+                <Card.Header className = 'card-title-bg text-center' style = {{fontSize: 25}}>
                     Login
                 </Card.Header>
-                <Card.Body style = {{padding: 50}}>
+                <Card.Body className = 'card-body' style = {{padding: 50}}>
                     <Form>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Email address</Form.Label>
+                            <Form.Label style={{color: '#080705'}}>Email address</Form.Label>
                             <Form.Control type="email" placeholder="name@example.com"
                             onChange={(e) => setEmail(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3">
-                            <Form.Label>Password</Form.Label>
+                            <Form.Label style={{color: '#080705'}}>Password</Form.Label>
                             <Form.Control type="password" 
                             onChange={(e) => setPassword(e.target.value)}/>
                         </Form.Group>

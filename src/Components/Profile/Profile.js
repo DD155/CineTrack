@@ -113,7 +113,7 @@ const Profile = () => {
 
 
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center">
+        <div className="bg d-flex flex-column justify-content-center align-items-center">
             {/* Delete Account Modal */}
             <Modal show={show} onHide={closeModal}>
                 <Modal.Header closeButton>

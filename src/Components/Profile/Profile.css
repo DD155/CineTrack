@@ -3,9 +3,10 @@
     height: 70vh;
     width: 30vw;
     border-radius: 5%;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(112, 110, 110, 0.24) 0px 3px 8px;
     padding: 30px;
     margin-top: 10vh;
+    background-color: #40434E;
 }
 
 .details-container > div {

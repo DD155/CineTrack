@@ -93,11 +93,11 @@ const Collection = () => {
 
         let msg = collection.isWatched === 0 ? "Mark as Watched" : "Mark as To Watch"
         
-        return (<div className = 'grid-item-i' key = {key}>
+        return (<div className = 'grid-item' key = {key}>
                     <Card style={{ width: '18rem' }}>
                         <Card.Img onClick = {() => goToDetails(obj)} style={{height: '450px', cursor:'pointer'}} variant="top" src= {path} />
                         <Card.Body>
-                            <Card.Title>{obj.title + ' (' + obj.year + ')'}</Card.Title>
+                            <Card.Title className = 'card-content'>{obj.title + ' (' + obj.year + ')'}</Card.Title>
                             <div className = 'button-container'>
                                 <Button variant='outline-danger' 
                                     onClick = {() => removeFromCollection(id, type)}>Remove</Button>
@@ -144,7 +144,7 @@ const Collection = () => {
     }, [])
 
     return (
-    <div className = 'mt-3'>
+    <div className = 'bg mt-3'>
         <div id = 'empty' className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
                 Add some movies or shows to your collection to see them here.
         </div>

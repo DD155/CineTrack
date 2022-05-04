@@ -20,17 +20,11 @@
     margin-left: 5px;
 }
 
-.review-container {
-    margin-top: 50px;
-}
-
 .textarea {
     margin: auto;
     width: 50vw;
     height: 200px;
 }
-
-
 
 .empty-msg { 
     height: 50vh;
@@ -45,7 +39,7 @@
     padding: 20px;
 }
 
-.reviewContainer {
+.review-container {
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -57,6 +51,8 @@
     display: flex;
     min-height: 30vh;
     overflow: hidden;
+    background-color: #40434E;
+    border-color: #40434E !important;
 }
 
 .author-container {
@@ -67,10 +63,13 @@
     font-size: 20pt; 
 }
 
-
+.detail-container {
+    overflow-x: hidden;
+    min-width: 100%;
+}
 
 .vertical-line {
-    border-right: 1px solid black;
+    border-right: 1px solid #EEEEEE;
     margin-left: 20px;
     margin-right: 10px;
     min-height: 30vh;
@@ -102,11 +101,15 @@
 }
 
 .delete {
-    color: red;
+    color: #d6475f;
 }
 
 .edit {
-    color: blue;
+    color: rgb(116, 140, 221);
+}
+
+hr {
+    border-color: #EEEEEE !important;
 }
 
 .title {
@@ -115,13 +118,15 @@
 
 .year {
     font-size: 22pt;
+    color: #702632;
 }
 
 .content {
     margin-top: 5vh;
     margin-bottom: 5vh;
-    width: 80%;
+    width: 85%;
     font-size: 16pt;
+    color: #EEEEEE;
 }
 
 .actor-heading {
@@ -130,6 +135,7 @@
 
 .actor {
     font-size: 14pt; 
+    color: #EEEEEE;
 }
 
 .collection-btn {
@@ -137,3 +143,4 @@
     width: 250px;
     height: 100px;
 }
+

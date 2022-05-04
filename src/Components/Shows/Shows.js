@@ -21,10 +21,10 @@ const Shows = () => {
     const createCard = (title, year) => {
         let path = cons.SHOW_IMG_PATH + title + '.jpg' // image path 
         return (
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '19rem' }}>
                 <Card.Img style={{height: '450px'}} variant="top" src= {path} />
                 <Card.Body>
-                    <Card.Title>{title + ' (' + year + ')'}</Card.Title>
+                    <Card.Title className = 'card-content'>{title + ' (' + year + ')'}</Card.Title>
                 </Card.Body>
             </Card>
         )
@@ -53,9 +53,9 @@ const Shows = () => {
     }, [])
 
     return (
-    <div className="App">
+    <div className="bg">
         <div>
-            <h1 className = 'text-center mt-3'> Shows</h1>  
+            <h1 className = 'page-title text-center mt-3'> Shows</h1>  
             {displayShows()}
         </div>
     </div>
