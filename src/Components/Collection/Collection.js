@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const Collection = () => {
     const navigate = useNavigate()
 
+    const [isEmpty, setIsEmpty] = useState(true)
+
     let [movies, setMovies] = useState([])
     let [shows, setShows] = useState([])
 
@@ -19,10 +21,8 @@ const Collection = () => {
         axios.post(req, {
             email: localStorage.getItem("email")        
         }).then((res) => {
-            console.log(res.data.message)
             if (res.data.message !== undefined) {
-                //document.getElementById("collection-container").style.display = 'none'
-                //document.getElementById("empty").style.display = 'block'
+                document.getElementById("collection-container").style.display = 'none'
             }
             else {
                 let data = res.data
@@ -30,6 +30,7 @@ const Collection = () => {
                 for (let i = 0; i < data.length; i++) {
                     (data[i].isWatched === 1) ? arrWatched.push(data[i]) : arrNotWatched.push(data[i])
                 }
+                setIsEmpty(false)
                 setWatched(arrWatched)
                 setNotWatched(arrNotWatched)
             }
@@ -145,9 +146,11 @@ const Collection = () => {
 
     return (
     <div className = 'bg mt-3'>
+        { isEmpty ? 
         <div id = 'empty' className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
                 Add some movies or shows to your collection to see them here.
-        </div>
+        </div> : ''
+        }
         <div id = 'collection-container'>
             <div className = 'watched-container'>
                 <h2>Watched</h2>
