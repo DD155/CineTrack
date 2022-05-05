@@ -11,9 +11,9 @@ app.use(cors())
 
 const db = mysql.createConnection({
     host: 'us-cdbr-east-05.cleardb.net',
-    user: 'b6a69b86c245ab',
-    password: '5b52d565',
-    database: "heroku_95d6094b520733f"
+    user: 'b8777caa0a3a03',
+    password: 'f62f106b',
+    database: "heroku_c84bcc258662256"
 })
 
 // establish connection
