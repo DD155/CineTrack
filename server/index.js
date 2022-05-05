@@ -10,10 +10,10 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 
 const db = mysql.createConnection({
-    host: 'us-cdbr-east-05.cleardb.net',
-    user: 'b6a69b86c245ab',
-    password: '5b52d565',
-    database: "heroku_95d6094b520733f"
+    host: 'localhost',
+    user: 'root',
+    password: 'password',
+    database: "project2"
 })
 
 // establish connection
@@ -85,7 +85,7 @@ app.post("/updateUserInfo", (req, res) => {
     )
 })
 
-app.get("/api/getAllMovies", (req, res) => {
+app.get("/getAllMovies", (req, res) => {
     const errorMsg = "Could not read movies from database."
     db.query(
         "SELECT * FROM movie",
@@ -369,4 +369,3 @@ PORT = 3001
 app.listen(process.env.PORT || PORT, () => {
     console.log("Starting server on port", PORT)
 })
-
