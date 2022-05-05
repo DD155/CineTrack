@@ -22,7 +22,7 @@ const Shows = () => {
         let path = cons.SHOW_IMG_PATH + title + '.jpg' // image path 
         return (
             <Card style={{ width: '19rem' }}>
-                <Card.Img style={{height: '450px'}} variant="top" src= {path} />
+                <Card.Img style={{height: '50vh'}} variant="top" src= {path} />
                 <Card.Body>
                     <Card.Title className = 'card-content'>{title + ' (' + year + ')'}</Card.Title>
                 </Card.Body>
