@@ -12,3 +12,4 @@ This project is created with and uses:
 - [Bootstrap](https://getbootstrap.com) + [React Bootstrap](https://react-bootstrap.github.io) 
 - [Express](expressjs.com)
 - [Axios](https://axios-http.com/)
+- [CORS](https://www.npmjs.com/package/cors)
