@@ -10,10 +10,10 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: "project2"
+    host: 'us-cdbr-east-05.cleardb.net',
+    user: 'b6a69b86c245ab',
+    password: '5b52d565',
+    database: "heroku_95d6094b520733f"
 })
 
 // establish connection
@@ -366,6 +366,7 @@ app.post("/toggleCollectionStatus", (req, res) => {
 
 
 PORT = 3001
-app.listen(PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
     console.log("Starting server on port", PORT)
 })
+
