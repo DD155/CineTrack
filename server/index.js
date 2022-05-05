@@ -85,7 +85,7 @@ app.post("/updateUserInfo", (req, res) => {
     )
 })
 
-app.get("/getAllMovies", (req, res) => {
+app.get("/api/getAllMovies", (req, res) => {
     const errorMsg = "Could not read movies from database."
     db.query(
         "SELECT * FROM movie",
